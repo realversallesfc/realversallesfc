@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Principal - Real Versalles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/root.css">
+  <link rel="icon" href="assets/img/logo.jpg">
+</head>
+
+<body>
+  <p class="mensaje" id="mensaje"></p>
+  <header>
+    <section class="busqueda_header_container">
+      <form id="searchForm" onsubmit="event.preventDefault(); buscarJugadores();">
+        <input type="text" id="searchJugador" placeholder="Buscar un jugador" class="input_busqueda" maxlength="10" minlength="10" required>
+        <button type="submit" class="boton_busqueda">
+          <img src="assets/svg/search.svg" alt="Buscar">
+        </button>
+      </form>
+    </section>
+
+    <button class="boton_anadir_jugador" id="abrir-modal-jugador">＋ Añadir jugador</button>
+
+    <div id="modal-jugador" class="modal">
+      <div class="modal-contenido">
+        <span class="cerrar-modal" id="cerrar-modal-jugador">&times;</span>
+        <h2>Añadir Jugador</h2>
+        <form id="formJugador" class="modal-formulario" onsubmit="event.preventDefault(); guardarJugador();">
+          <label for="docJugador">Documento del jugador</label>
+          <input type="text" id="docJugador" inputmode="numeric" maxlength="10" >
+          <label for="nombreJugador">Nombre del jugador</label>
+          <input type="text" id="nombreJugador">
+          <label for="archivoJugador">Hoja de vida (PDF)</label>
+          <input type="file" id="archivoJugador" accept="application/pdf">
+          <span class="file-preview" id="previewArchivo"></span>
+          <div class="modal-botones">
+            <button type="submit" class="boton-confirmar">Guardar</button>
+            <button type="button" onclick="cerrarModal('modal-jugador')" class="boton-cancelar">Cancelar</button>
+          </div>
+          <p id="mensajeJugador"></p>
+        </form>
+      </div>
+    </div>
+
+    <button class="boton_anadir_plantilla" id="abrir-modal-plantilla">＋ Añadir plantilla</button>
+
+    <div id="modal-plantilla" class="modal">
+      <div class="modal-contenido">
+        <span class="cerrar-modal" id="cerrar-modal-plantilla">&times;</span>
+        <h2>Añadir Plantilla</h2>
+        <form id="formPlantilla" class="modal-formulario" onsubmit="event.preventDefault(); guardarPlantilla();">
+          <label for="archivoPlantilla">Archivo (PDF)</label>
+          <input type="file" id="archivoPlantilla" accept="application/pdf" required>
+          <span class="file-preview" id="previewPlantilla"></span>
+          <div class="modal-botones">
+            <button class="boton-confirmar">Guardar</button>
+            <button class="boton-cancelar" onclick="cerrarModal('modal-plantilla')">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <button class="boton_cerrar_sesion" id="abrir-modal-sesion">Cerrar sesión</button>
+
+    <div id="modal-sesion" class="modal">
+      <div class="modal-contenido">
+        <span class="cerrar-modal" id="cerrar-modal-sesion">&times;</span>
+        <h2>¿Desea cerrar sesión?</h2>
+        <div class="modal-botones">
+          <button class="boton-confirmar" onclick="cerrarSesion()">Salir</button>
+          <button class="boton-cancelar" onclick="cerrarModal('modal-sesion')">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="header_dashboard">
+      <div class="header_dashboard_logo">
+        <img src="assets/img/logo.jpg" alt="Logo Real Versalles" class="logo_header">
+        <div class="header_dashboard_text">
+          <h1>Gestión de jugadores</h1>
+          <p>Gestión de jugadores y administración del club</p>
+        </div>
+      </div>
+      <div class="contadores">
+        <p id="contador-jugadores">Total de jugadores registrados: <span id="contador-jugadores-span"></span></p>
+        <p id="contador-plantillas">Total de plantillas: <span id="contador-plantillas-span"></span></p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="dashboard-grid">
+      <div class="jugadores-list">
+        <h2>Jugadores</h2>
+        <div class="jugadores-grid-container"></div>
+      </div>
+      <div class="plantillas-list">
+        <h2>Plantillas</h2>
+        <div class="plantillas-list-container"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal visor -->
+  <div id="modal-visor" class="modal">
+    <div class="modal-contenido">
+      <span class="cerrar-modal" id="cerrar-modal-visor">&times;</span>
+      <iframe id="visorArchivo" src="" frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <footer>
+    <p>Real Versalles 2025 - Todos los derechos reservados</p>
+  </footer>
+
+  <script src="js/dashboard.js"></script>
+  <script src="js/message.js"></script>
+  <script src="js/modal.js"></script>
+</body>
+
+</html>

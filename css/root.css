@@ -1,0 +1,224 @@
+:root {
+    /* colores de fondos */
+    --color-fondo-primario: #f5f5f5;
+    --color-fondo-secundario: #ffffff;
+    --color-fondo-terciario: #cfcfcf;
+    --color-fondo-contadores: #ff0000;
+
+    /* colores de texto */
+    --color-titulo-primario: #ff0000;
+    --color-titulo-secundario: #565656;
+    --color-titulo-terciario: #f5f5f5;
+
+    --color-subtitulo-primario: #565656;
+    --color-subtitulo-secundario: #565656;
+
+    /* Botones */
+    --color-boton: #ff0000;
+    --color-boton-hover: #d30101;
+    --color-boton-active: #d30101;
+    --color-boton-texto: #ffffff;
+    --color-boton-hover-texto: #cccccc;
+    --color-boton-active-texto: #cccccc;
+
+    /* colores de bordes */
+    --color-borde: #ff0000;
+    --color-hr: gray;
+    --color-borde-hover: rgb(211, 1, 1);
+    --color-borde-active: rgb(211, 1, 1);
+
+    /* colores de sombras */
+    --color-sombra-formulario: #ff0000;
+
+    /* colores de mensajes */
+    --color-error: #ff0000;
+    --color-success: rgb(0, 188, 0);
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: var(--color-fondo);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-boton-texto);
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+/* Estilos de los modales */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-contenido {
+    background-color: var(--color-fondo-secundario);
+    padding: 40px;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.modal-formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-formulario>label {
+    text-align: left;
+}
+
+.modal-formulario>input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.modal-botones {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.boton-confirmar {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color-boton);
+    color: var(--color-boton-texto);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-confirmar:hover {
+    background-color: var(--color-boton-hover);
+}
+
+.boton-confirmar:active {
+    background-color: var(--color-boton-active);
+}
+
+.boton-cancelar {
+    padding: 12px 20px;
+    border: 1px solid var(--color-boton);
+    border-radius: 5px;
+    background-color: var(--color-boton-texto);
+    color: var(--color-boton);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-cancelar:hover {
+    border: 1px solid var(--color-boton-hover);
+    background-color: var(--color-boton-hover-texto);
+}
+
+.boton-cancelar:active {
+    background-color: var(--color-boton-active-texto);
+}
+
+.modal-contenido>.modal-mensaje {
+    margin-top: 10px;
+    font-size: 14px;
+    color: green;
+}
+
+
+.mensaje {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-boton);
+    color: var(--color-boton-texto);
+    border-radius: 5px;
+    padding: 15px 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 5000;
+    max-width: 300px;
+    animation: slideIn 0.3s ease-out forwards;
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.error {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-error);
+    color: var(--color-boton-texto);
+    border-radius: 5px;
+    padding: 15px 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 5000;
+    max-width: 300px;
+    animation: slideIn 0.3s ease-out forwards;
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.success {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-success);
+    color: var(--color-boton-texto);
+    border-radius: 5px;
+    padding: 15px 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 5000;
+    max-width: 300px;
+    animation: slideIn 0.3s ease-out forwards;
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.cerrar-modal {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+}

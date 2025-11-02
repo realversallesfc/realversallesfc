@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="assets/img/logo.jpg">
+  <title>Real Versalles</title>
+  <link rel="stylesheet" href="css/root.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <p class="mensaje" id="mensaje"></p>
+  <div class="container">
+    <div class="sidebar">
+      <img class="logo-portal" src="assets/img/logo.jpg">
+      <div class="texto-header">
+        <h1 class="titulo-portal">Real Versalles</h1>
+      </div>
+    </div>
+
+    <form id="formulario-login" class="formulario-login">
+      <h2 class="titulo-login">Iniciar Sesión</h2>
+      <label for="correo">Ingrese su correo</label>
+      <input type="email" id="correo">
+  
+      <label for="contrasena">Ingrese su contraseña</label>
+      <input type="password" id="contrasena">
+  
+      <button type="submit" class="btn-ingresar">Ingresar</button>
+      <a href="#" id="abrir-modal-recuperar">¿Olvidaste tu contraseña?</a>
+    </form>
+  </div>
+
+  <div class="modal" id="modal-recuperar">
+    <div class="modal-contenido">
+      <span class="cerrar-modal" id="cerrar-modal-recuperar">&times;</span>
+      <h2>Recuperar Contraseña</h2>
+      <p>Ingresa tu correo para recibir un enlace de recuperación</p>
+      <form id="form-recuperar" class="modal-formulario">
+        <input type="email" id="correo-recuperar" placeholder="Correo electrónico">
+        <button class="boton-confirmar" id="enviar-recuperar">Enviar enlace</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/modal.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/message.js"></script>
+</body>
+</html>
