@@ -236,7 +236,15 @@ async function guardarJugador() {
 async function obtenerJugadores() {
   try {
     const response = await fetch(`${API_URL}/jugadores`);
-    const data = await response.json();
+    let data = await response.json();
+    
+    // Mapear los datos para usar 'archivo' en lugar de 'archivo_hoja_vida'
+    data = data.map(jugador => ({
+      ...jugador,
+      archivo: jugador.archivo_hoja_vida  // Mapear archivo_hoja_vida a archivo
+    }));
+    
+    console.log('Jugadores con archivos mapeados:', data);
 
     // Actualizar el contador de jugadores
     const contadorJugadores = document.getElementById('contador-jugadores-span');
@@ -306,17 +314,34 @@ async function buscarJugadores() {
       return; // Salir de la función después de manejar el error
     }
 
-    const data = await response.json();
+    let data = await response.json();
 
     if (!data || Object.keys(data).length === 0) {
       throw new Error(`No se encontró información para el jugador con documento: ${searchTerm}`);
     }
 
+    // Mapear el campo archivo_hoja_vida a archivo para consistencia
+    data = {
+      ...data,
+      archivo: data.archivo_hoja_vida
+    };
+
+    console.log('Datos del jugador encontrado:', data);
+
     const primeraLetra = data.nombre.charAt(0).toUpperCase();
     const nombre = data.nombre;
     const documento = data.documento;
     const archivoNombre = data.archivo ? 'Ver documento' : 'Sin archivo';
-    const archivoUrl = data.archivo ? `${API_URL}/uploads/${data.archivo}` : '#';
+    
+    // Construir la URL de Cloudinary para el archivo
+    let archivoUrl = '#';
+    if (data.archivo) {
+      const fileId = data.archivo.split('/').pop();
+      archivoUrl = `https://res.cloudinary.com/dee5ygh4k/image/upload/v1762113142/real_versalles/jugadores/${fileId}`;
+      if (fileId.toLowerCase().endsWith('.pdf')) {
+        archivoUrl += '?force_download=true';
+      }
+    }
     const archivoLink = data.archivo ? `<a href="${archivoUrl}" target="_blank" class="archivo-link">${archivoNombre}</a>` : `<span class="sin-archivo">${archivoNombre}</span>`;
     
     // Mostrar el jugador encontrado
@@ -376,7 +401,19 @@ async function mostrarJugadores() {
     const nombre = jugador.nombre;
     const documento = jugador.documento;
     const archivoNombre = jugador.archivo ? 'Ver documento' : 'Sin archivo';
-    const archivoUrl = jugador.archivo ? `${API_URL}/uploads/${jugador.archivo}` : '#';
+    // Construir la URL del archivo para Cloudinary
+    let archivoUrl = '#';
+    if (jugador.archivo) {
+      // Extraer el ID del archivo de la URL
+      const fileId = jugador.archivo.split('/').pop();
+      // Construir la URL de Cloudinary con el formato correcto
+      archivoUrl = `https://res.cloudinary.com/dee5ygh4k/image/upload/v1762113142/real_versalles/jugadores/${fileId}`;
+      
+      // Si el archivo es un PDF, forzar la descarga
+      if (fileId.toLowerCase().endsWith('.pdf')) {
+        archivoUrl += '?force_download=true';
+      }
+    }
     const archivoLink = jugador.archivo ? `<a href="${archivoUrl}" target="_blank" class="archivo-link">${archivoNombre}</a>` : `<span class="sin-archivo">${archivoNombre}</span>`;
 
     const card = document.createElement('div');
@@ -394,6 +431,26 @@ async function mostrarJugadores() {
 
     container.appendChild(card);
   });
+}
+
+// Función para actualizar el contador de jugadores
+async function actualizarContadorJugadores() {
+  try {
+    const response = await fetch(`${API_URL}/jugadores`);
+    const jugadores = await response.json();
+    const contador = document.getElementById('contador-jugadores-span');
+    if (contador) {
+      contador.textContent = jugadores.length;
+    }
+    return jugadores.length;
+  } catch (error) {
+    console.error('Error al actualizar contador de jugadores:', error);
+    const contador = document.getElementById('contador-jugadores-span');
+    if (contador) {
+      contador.textContent = '0';
+    }
+    return 0;
+  }
 }
 
 // Función para cerrar sesión
